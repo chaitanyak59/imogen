@@ -15,11 +15,11 @@ The project is currently designed as a local development and learning project, w
 └──────────────┬───────────────┘
                │
                │ HTTPS
-               │ POST /api/images/generate
+               │ POST /api/ImageGen/generate
                ▼
 ┌──────────────────────────────┐
 │        ASP.NET Core API      │
-│     https://localhost:5001   │
+│     https://localhost:5687   │
 │                              │
 │  Validation                  │
 │  Application contracts       │
@@ -32,7 +32,7 @@ The project is currently designed as a local development and learning project, w
                ▼
 ┌──────────────────────────────┐
 │        Python FastAPI        │
-│      http://127.0.0.1:5005   │
+│      http://127.0.0.1:5689   │
 │                              │
 │  Persistent FLUX model       │
 └──────────────┬───────────────┘
