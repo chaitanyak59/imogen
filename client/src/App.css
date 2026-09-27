@@ -1,0 +1,33 @@
+main {
+    width: min(900px, calc(100% - 40px));
+    margin: 40px auto;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+textarea {
+    padding: 12px;
+    font: inherit;
+    resize: vertical;
+}
+
+button {
+    width: fit-content;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+button:disabled {
+    cursor: not-allowed;
+}
+
+img {
+    display: block;
+    width: 100%;
+    height: auto;
+    margin-top: 20px;
+}

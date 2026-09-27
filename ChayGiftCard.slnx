@@ -1,0 +1,11 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/GiftCardAI.Api/GiftCardAI.Api.csproj" />
+    <Project Path="src/GiftCardAI.Application/GiftCardAI.Application.csproj" />
+    <Project Path="src/GiftCardAI.Domain/GiftCardAI.Domain.csproj" />
+    <Project Path="src/GiftCardAI.Infrastructure/GiftCardAI.Infrastructure.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/GiftCardAI.Api.Tests/GiftCardAI.Api.Tests.csproj" />
+  </Folder>
+</Solution>
