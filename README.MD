@@ -1,5 +1,7 @@
 # ChayGiftCardGen
 
+![Alt text](assets/App.png)
+
 ChayGiftCardGen is a local AI-powered gift card image generation application.
 
 A user enters a description in the React UI, the request is sent through the .NET API to a local Python AI service, and FLUX.2 generates the image using Apple Silicon through MLX/MFLUX.

@@ -1,0 +1,59 @@
+.gift-card-designer {
+    width: min(100% - 40px, 1000px);
+    margin: 0 auto;
+    padding: 48px 0;
+}
+
+.gift-card-designer header {
+    margin-bottom: 32px;
+    text-align: center;
+}
+
+.gift-card-designer header h1 {
+    margin: 0;
+    font-size: 32px;
+    font-weight: 700;
+    letter-spacing: -0.8px;
+    color: #1f2937;
+}
+
+.gift-card-designer header p {
+    margin-top: 10px;
+    color: #6b7280;
+    font-size: 15px;
+}
+
+.gift-card-designer form {
+    margin-top: 32px;
+}
+
+.gift-card-designer form button {
+    width: 100%;
+    margin-top: 28px;
+    padding: 15px 24px;
+    border: none;
+    border-radius: 10px;
+    background: #293f75;
+    color: white;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.gift-card-designer form button:hover:not(:disabled) {
+    background: #1d315e;
+    transform: translateY(-1px);
+}
+
+.gift-card-designer form button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.error-message {
+    margin-top: 16px;
+    color: #dc2626;
+    font-size: 14px;
+    text-align: center;
+}

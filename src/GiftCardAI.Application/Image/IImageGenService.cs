@@ -7,5 +7,5 @@ namespace GiftCardAI.Application.Image;
 
 public interface IImageGenService
 {
-    Task<byte[]> GenerateAsync(GenImageRequest request, CancellationToken cancellationToken = default);
+    Task<GenImageResponse> GenerateAsync(string prompt, CancellationToken cancellationToken = default);
 }

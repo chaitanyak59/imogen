@@ -24,19 +24,20 @@ public class PythonImageGenService : IImageGenService
         _logger = logger;
     }
 
-    public async Task<byte[]> GenerateAsync(GenImageRequest request, CancellationToken cancellationToken = default)
+    public async Task<GenImageResponse> GenerateAsync(string prompt, CancellationToken cancellationToken = default)
     {
         string? httpClientName = _configuration["AI:ImageHttp"];
         int steps = Convert.ToInt32(_configuration["AI:Image_Steps"]);
         int width = Convert.ToInt32(_configuration["AI:Image_Width"]);
         int height = Convert.ToInt32(_configuration["AI:Image_Height"]);
+        int seed = Random.Shared.Next();
 
         HttpClient client = _httpClientFactory.CreateClient(httpClientName ?? "");
 
         try
         {
-            var aiRequest = new PythonGenerateImageRequest(request.Prompt, steps, Random.Shared.Next(), width, height);
-            using var response = await client.PostAsJsonAsync("images/generate", request, cancellationToken);
+            var aiRequest = new PythonGenerateImageRequest(prompt, steps, seed, width, height);
+            using var response = await client.PostAsJsonAsync("images/generate", aiRequest, cancellationToken);
             if (!response.IsSuccessStatusCode)
             {
                 var error = await response.Content.ReadAsStringAsync(cancellationToken);
@@ -44,13 +45,13 @@ public class PythonImageGenService : IImageGenService
                 throw new InvalidOperationException($"AI image generation failed. Status: {(int)response.StatusCode}. Response: {error}");
             }
 
-            return await response.Content.ReadAsByteArrayAsync(cancellationToken);
+            return new GenImageResponse(await response.Content.ReadAsByteArrayAsync(cancellationToken), seed);
         }
         catch (Exception ex)
         {
             _logger.LogError("Error getting something fun to say: {Error}", ex);
         }
 
-        return [];
+        return new GenImageResponse(null!, seed);
     }
 }

@@ -1,4 +1,5 @@
 using GiftCardAI.Application.Image;
+using GiftCardAI.Application.Image.Validator;
 using GiftCardAI.Infrastructure.Image;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -14,6 +15,7 @@ builder.Services.AddCors(options =>
         policy.WithOrigins(builder.Configuration["UI:URL"]!);
         policy.AllowAnyHeader();
         policy.AllowAnyMethod();
+        policy.SetPreflightMaxAge(TimeSpan.FromHours(1));
     });
 });
 
@@ -28,6 +30,8 @@ builder.Services.AddHttpClient(
 
 // SERVICES
 builder.Services.AddTransient<IImageGenService, PythonImageGenService>();
+builder.Services.AddSingleton<GenImageValidator>();
+builder.Services.AddSingleton<GenImagePromptBuilder>();
 
 var app = builder.Build();
 

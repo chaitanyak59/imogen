@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace GiftCardAI.Application.Image;
 
-public sealed record GenImageRequest
-{
-    [Required]
-    [StringLength(1000, MinimumLength = 3)]
-    public required string Prompt { get; init; }
-}
+public sealed record GenImageRequest(
+    string Occasion,
+    string Theme,
+    string Message
+);

@@ -26,7 +26,7 @@ model = Flux2Klein(
 print("FLUX.2 model loaded.")
 
 class GenerateImageRequest(BaseModel):
-    prompt: str = Field(min_length=1, max_length=1000)
+    prompt: str = Field(min_length=1, max_length=10000)
     steps: int = Field(default=4, ge=1, le=20)
     seed: int = Field(default=42, ge=0)
     width: int = Field(default=1024, ge=256, le=1536)

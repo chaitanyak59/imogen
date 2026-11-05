@@ -1,0 +1,65 @@
+.design-options {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 24px;
+}
+
+.design-option {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.design-option label {
+    color: #374151;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.design-option select {
+    width: 100%;
+    padding: 13px 14px;
+    border: 1px solid #d1d5db;
+    border-radius: 9px;
+    background-color: white;
+    color: #374151;
+    font-size: 15px;
+    outline: none;
+    cursor: pointer;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.design-option select:focus {
+    border-color: #293f75;
+    box-shadow: 0 0 0 3px rgba(41, 63, 117, 0.12);
+}
+
+.design-option textarea {
+    width: 100%;
+    min-height: 90px;
+    padding: 13px 14px;
+    border: 1px solid #d1d5db;
+    border-radius: 9px;
+    background-color: #ffffff;
+    color: #374151;
+    font-size: 15px;
+    resize: vertical;
+    outline: none;
+}
+
+.design-option textarea::placeholder {
+    color: #9ca3af;
+    opacity: 1;
+}
+
+@media (max-width: 600px) {
+    .design-options {
+        grid-template-columns: 1fr;
+        gap: 18px;
+    }
+
+    .design-option--message {
+        grid-column: auto;
+    }
+}
+
