@@ -1,8 +1,12 @@
-from fastapi import FastAPI, HTTPException
+from io import BytesIO
+
+from fastapi import FastAPI, HTTPException, Response
 from fastapi.responses import FileResponse
 from pydantic import BaseModel, Field
 from mflux.models.common.config import ModelConfig
 from mflux.models.flux2.variants import Flux2Klein
+from mflux.models.z_image import ZImageTurbo
+
 from pathlib import Path
 from uuid import uuid4
 
@@ -50,8 +54,10 @@ async def generate_image(request: GenerateImageRequest):
             width=request.width,
             height=request.height
         )
-
-        image.save(str(output_path))
+        buffer = BytesIO()
+        image.image.save(buffer,format="PNG")
+        image_bytes = buffer.getvalue()
+        buffer.close()
     except Exception as exception:
         print(f"Image generation failed: {exception}")
 
@@ -60,8 +66,7 @@ async def generate_image(request: GenerateImageRequest):
             detail="Image generation failed."
         )
 
-    return FileResponse(
-        path=output_path,
-        media_type="image/png",
-        filename=f"{image_id}.png"
+    return Response(
+        content=image_bytes,
+        media_type="image/png"
     )

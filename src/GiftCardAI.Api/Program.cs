@@ -1,6 +1,10 @@
+using Amazon;
+using Amazon.BedrockRuntime;
+using ChayGiftCardGen.Infrastructure.ImageGeneration.Bedrock;
 using GiftCardAI.Application.Image;
 using GiftCardAI.Application.Image.Validator;
 using GiftCardAI.Infrastructure.Image;
+using GiftCardAI.Infrastructure.Image.Bedrock;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -29,7 +33,20 @@ builder.Services.AddHttpClient(
     });
 
 // SERVICES
-builder.Services.AddTransient<IImageGenService, PythonImageGenService>();
+// builder.Services.AddSingleton<IAmazonBedrockRuntime>(_ => new AmazonBedrockRuntimeClient(RegionEndpoint.GetBySystemName("us-west-2")));
+builder.Services.AddKeyedTransient<IImageGenService, PythonImageGenService>("Python");
+builder.Services.AddKeyedTransient<IImageGenService, BedrockImageGenerationService>("AWS");
+builder.Services.AddTransient<IImageGenFactory, ImageGenFactory>();
+
+builder.Services.AddHttpClient<BedrockImageClient>((serviceProvider, client) =>
+{
+    var configuration = serviceProvider.GetRequiredService<IConfiguration>();
+
+    var region = configuration["AWS:Region"];
+    client.BaseAddress = new Uri($"https://bedrock-runtime.{region}.amazonaws.com/");
+    client.Timeout = TimeSpan.FromMinutes(3);
+});
+
 builder.Services.AddSingleton<GenImageValidator>();
 builder.Services.AddSingleton<GenImagePromptBuilder>();
 

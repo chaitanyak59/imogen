@@ -4,6 +4,7 @@ import "./DesignOptions.css";
 interface DesignOptionsProps {
     occasion: string;
     theme: string;
+    message: string;
     occasions: DesignOption[];
     themes: DesignOption[];
     onOccasionChange: (value: string) => void;
@@ -16,6 +17,7 @@ function DesignOptions({
     theme,
     occasions,
     themes,
+    message,
     onOccasionChange,
     onThemeChange,
     onMessageChange
@@ -48,7 +50,7 @@ function DesignOptions({
                 <textarea
                     id="message"
                     onChange={(event) => onMessageChange(event.target.value)}
-                    placeholder="e.g. Happy Birthday!"
+                    value={message}
                     maxLength={100}
                 />
             </div>

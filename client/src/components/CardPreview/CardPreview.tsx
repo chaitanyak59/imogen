@@ -17,9 +17,8 @@ function CardPreview({ imageUrl, isGenerating }: CardPreviewProps) {
                 <img src={imageUrl} alt="Generated gift card" />
             ) : (
                 <div className="preview-placeholder">
-                    <span className="preview-icon">🎁</span>
+                    <span className="preview-icon">💳</span>
                     <h2>Your gift card will appear here</h2>
-                    <p>Choose an occasion and theme to get started.</p>
                 </div>
             )}
         </div>

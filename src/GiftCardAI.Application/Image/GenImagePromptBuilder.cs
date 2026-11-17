@@ -9,55 +9,43 @@ namespace GiftCardAI.Application.Image;
 public class GenImagePromptBuilder
 {
     private const string MasterPrompt = """
-        You are a professional digital gift card designer.
+        Create premium digital gift card artwork for the occasion: {0}, with a {1} visual theme.
 
-        Create a premium, elegant digital gift card.
+        Use a clean, modern commercial graphic design style with beautiful illustrations, appropriate colors, decorative elements and balanced composition.
 
-        GIFT CARD DETAILS
+        Create a flat, front-facing 2D landscape design with full-bleed artwork and a visually balanced central area reserved for text.
 
-        Occasion: {0}
-        Theme: {1}
+        Do not generate any text, letters, words, numbers, typography, captions, logos or watermarks.
 
-        DESIGN REQUIREMENTS
+        No physical card mockups, perspective, shadows, surrounding environments or 3D effects.
+    """;
 
-        - Create a beautiful, premium digital gift card.
-        - Use a standard 1.6:1 gift card aspect ratio.
-        - Use colors and decorative elements appropriate to the occasion and theme.
-        - Create elegant borders, decorative details and balanced composition.
-        - Use sophisticated typography that complements the design.
-        - Make the card visually appealing and commercially suitable.
+    private static readonly Dictionary<string, string> OccasionHeadings = new(StringComparer.OrdinalIgnoreCase)
+    {
+        ["Thank You"] = "Thank You",
+        ["Birthday"] = "Happy Birthday",
+        ["Christmas"] = "Merry Christmas",
+        ["Wedding"] = "Congratulations",
+        ["Anniversary"] = "Happy Anniversary",
+        ["Graduation"] = "Congratulations",
+        ["Valentine's Day"] = "Happy Valentine's Day",
+        ["New Year"] = "Happy New Year"
+    };
 
-        TEXT REQUIREMENTS
-
-        - Include only this exact text: "{2}"
-        - Display the text prominently as the main heading.
-        - Use elegant, readable typography.
-        - Do not add subtitles, descriptions, greetings, dates or additional words.
-        - Do not generate random letters, decorative text or fake typography.
-        - Do not repeat the message.
-        - Ensure the displayed message is correctly spelled.
-
-        STRICT RESTRICTIONS
-
-        - Generate ONLY a digital gift card.
-        - Never generate posters, flyers, advertisements or invitations.
-        - Never generate unrelated scenes or photographs.
-        - Never generate adult, sexual, violent, hateful or illegal content.
-        - Do not generate random logos, watermarks or signatures.
-
-        FINAL INSTRUCTION
-
-        Generate one standalone, premium digital gift card with minimal, readable text.
-        """;
+    public string GetHeading(string occasion)
+    {
+        return OccasionHeadings.TryGetValue(occasion, out var heading)
+            ? heading
+            : occasion;
+    }
 
     public string Build(string occasion, string theme, string message = "")
     {
         return string.Format(
-            CultureInfo.InvariantCulture,
-            MasterPrompt,
-            occasion,
-            theme,
-            message
-        );
+        CultureInfo.InvariantCulture,
+        MasterPrompt,
+        GetHeading(occasion),
+        theme,
+        string.IsNullOrWhiteSpace(message) ? "No custom message" : message.Trim());
     }
 }

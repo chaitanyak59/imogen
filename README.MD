@@ -12,7 +12,7 @@ The project is currently designed as a local development and learning project, w
 
 ```text
 ┌──────────────────────────────┐
-│         React + Vite         │
+│         React                │
 │      http://localhost:5173   │
 └──────────────┬───────────────┘
                │
@@ -20,7 +20,7 @@ The project is currently designed as a local development and learning project, w
                │ POST /api/ImageGen/generate
                ▼
 ┌──────────────────────────────┐
-│        ASP.NET Core API      │
+│        .NET Core API         │
 │     https://localhost:5687   │
 │                              │
 │  Validation                  │
@@ -33,18 +33,15 @@ The project is currently designed as a local development and learning project, w
                │ POST /images/generate
                ▼
 ┌──────────────────────────────┐
-│        Python FastAPI        │
-│      http://127.0.0.1:5689   │
-│                              │
-│  Persistent FLUX model       │
+│   LOCAL AI / BED ROCK MODEL  │
 └──────────────┬───────────────┘
                │
                ▼
 ┌──────────────────────────────┐
-│         MFLUX / MLX          │
+│ MFLUX / MLX  / Stability AI  │
 │                              │
-│  FLUX.2 Klein 4B - 4 bit     │
-│  Apple Silicon inference     │
+│                              │
+│                              │
 └──────────────┬───────────────┘
                │
                ▼
@@ -379,7 +376,7 @@ dotnet --version
 
 ### Node.js and npm
 
-Required for the React/Vite application.
+Required for the React application.
 
 Verify:
 

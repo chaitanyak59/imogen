@@ -27,7 +27,7 @@ const themes: DesignOption[] = [
 function GiftCardDesigner() {
     const [occasion, setOccasion] = useState("birthday");
     const [theme, setTheme] = useState("elegant");
-    const [message, setMessage] = useState("");
+    const [message, setMessage] = useState("Best Wishes!");
     const [imageUrl, setImageUrl] = useState<string | null>(null);
     const [isGenerating, setIsGenerating] = useState(false);
     const [error, setError] = useState<string | null>(null);
@@ -72,6 +72,7 @@ function GiftCardDesigner() {
                 <DesignOptions
                     occasion={occasion}
                     theme={theme}
+                    message={message}
                     occasions={occasions}
                     themes={themes}
                     onOccasionChange={setOccasion}

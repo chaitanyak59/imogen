@@ -12,15 +12,17 @@ namespace GiftCardAI.Api.Controllers;
 [Route("api/[controller]")]
 public class ImageGenController : ControllerBase
 {
-    private readonly IImageGenService _imageGenSvc;
+    private readonly IImageGenFactory _factory;
     private readonly GenImageValidator _validator;
     private readonly GenImagePromptBuilder _promptBuilder;
+    private readonly IConfiguration _configuration;
 
-    public ImageGenController(IImageGenService imageGenSvc, GenImageValidator validator, GenImagePromptBuilder promptBuilder)
+    public ImageGenController(IImageGenFactory factory, GenImageValidator validator, GenImagePromptBuilder promptBuilder, IConfiguration configuration)
     {
-        _imageGenSvc = imageGenSvc;
+        _factory = factory;
         _validator = validator;
         _promptBuilder = promptBuilder;
+        _configuration = configuration;
     }
 
     [HttpPost("generate")]
@@ -34,8 +36,18 @@ public class ImageGenController : ControllerBase
             });
         }
 
+        var _imageGenSvc = _factory.GetProvider(_configuration["AI:Provider"]! ?? "AWS");
         var prompt = _promptBuilder.Build(request.Occasion, request.Theme, request.Message);
         var image = await _imageGenSvc.GenerateAsync(prompt, cancellationToken);
+        if (image?.Content is not { Length: > 0 })
+        {
+            return Problem(
+                statusCode: StatusCodes.Status500InternalServerError,
+                title: "Image generation failed",
+                detail: "The generated image is empty or unavailable."
+            );
+        }
+
         return File(image.Content, "image/png");
     }
 }
