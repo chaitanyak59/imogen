@@ -9,15 +9,24 @@ namespace GiftCardAI.Application.Image;
 public class GenImagePromptBuilder
 {
     private const string MasterPrompt = """
-        Create premium digital gift card artwork for the occasion: {0}, with a {1} visual theme.
+        Create premium digital gift card artwork for the occasion: {0}, using a {1} visual theme.
 
-        Use a clean, modern commercial graphic design style with beautiful illustrations, appropriate colors, decorative elements and balanced composition.
+        MAIN TEXT REQUIREMENT:
+        Display exactly this text as the ONLY greeting highlighter in the entire image: "{2}".
 
-        Create a flat, front-facing 2D landscape design with full-bleed artwork and a visually balanced central area reserved for text.
+        Make this text the prominent central heading. Preserve the exact spelling, wording and capitalization. Do not modify, repeat, paraphrase or add any words.
 
-        Do not generate any text, letters, words, numbers, typography, captions, logos or watermarks.
+        STRICT TEXT RESTRICTIONS:
+        Do not generate subtitles, captions, descriptions, secondary headings, greetings, dates, numbers, decorative lettering, random characters or additional text.
+        Do not invent text based on the occasion or theme.
+        Do not add any text above or below the specified heading.
 
-        No physical card mockups, perspective, shadows, surrounding environments or 3D effects.
+        DESIGN:
+        Use a premium modern commercial graphic design style with beautiful illustrations, appropriate colors and balanced decorative elements.
+        Use a flat, front-facing 2D landscape composition with full-bleed artwork.
+        Keep the central area clean and uncluttered so the main heading is clearly visible.
+
+        No physical card mockups, perspective, shadows, surrounding environments, 3D effects, logos or watermarks.
     """;
 
     private static readonly Dictionary<string, string> OccasionHeadings = new(StringComparer.OrdinalIgnoreCase)
@@ -41,11 +50,14 @@ public class GenImagePromptBuilder
 
     public string Build(string occasion, string theme, string message = "")
     {
+        var lower = message.ToLower();
+        var messageText = char.ToUpper(lower[0]) + lower[1..];
+
         return string.Format(
         CultureInfo.InvariantCulture,
         MasterPrompt,
-        GetHeading(occasion),
+        occasion,
         theme,
-        string.IsNullOrWhiteSpace(message) ? "No custom message" : message.Trim());
+        messageText);
     }
 }
